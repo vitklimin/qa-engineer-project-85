@@ -6,7 +6,8 @@
   prerequisites: |
     "no-data"
   test-data: |
-    Username = vitklimin1
+    Username = vitklimin2
+    Email = klimin.vitaik@inbox.ru
     Password = Ghjnjnbg1991
   steps:
     - Нажимаем на "Sign up"
@@ -19,26 +20,26 @@
     Успешная регистрация, переход на главную страницу сайта
 
 - summary: |
-    Проверка входа в личный кабинет
+    Успешная авторизация
   requirement: |
-    Пользователь должен иметь возможность войти в личный кабинет
+    Пользователь должен иметь возможность авторизоваться
   prerequisites: |
     "no-data"
   test-data: |
-    Username = vitklimin1
+    Email = klimin.vitaik@inbox.ru
     Password = Ghjnjnbg1991
   steps:
     - Нажимаем на "Sign in"
-    - Вводим Nickname
+    - Вводим Email
     - Вводим Password
     - Нажимаем кнопку «Submit»
   expected-result: |
-    Открывается личный кабинет 
+    Игрок попадает на страницу Lobby игры
 
 - summary: |
     Проверка входа в личный кабинет с помощью данных из Github
   requirement: |
-    Пользователь должен иметь возможность войти в личный кабинет
+    Пользователь должен иметь возможность авторизоваться
   prerequisites: |
     У пользователя есть учетная запись на Github
   test-data: |
@@ -48,12 +49,12 @@
     - Нажимаем на "Sign in with Github"
     - Нажимаем кнопку «Sign in»
   expected-result: |
-    Открывается личный кабинет 
+    Игрок попадает на страницу Lobby игры 
 
 - summary: |
     Проверка входа в личный кабинет с помощью данных из Discord
   requirement: |
-    Пользователь должен иметь возможность войти в личный кабинет
+    Пользователь должен иметь возможность авторизоваться
   prerequisites: |
     У пользователя есть учетная запись на Discord
   test-data: |
@@ -63,7 +64,7 @@
     - Нажимаем на "Sign in with Discord"
     - Нажимаем кнопку «Вход»
   expected-result: |
-    Открывается личный кабинет    
+    Игрок попадает на страницу Lobby игры 
     
 - summary: |
     Проверка на возможность выйти из личного кабинета
@@ -138,6 +139,27 @@
     - Нажимаем на "Create battle"
   expected-result: |
     В списке турниров появляется созданный турнир
+
+- summary: |
+    Получения очков по итогам игры 
+  requirement: |
+    Игроки должны получать очки за выйгрыш, которые влияют на рейтинг
+  prerequisites: |
+    Создать игру с ботом rect_area, level -1 звезда, Time control - 10 min, язык - NodeJS 
+  test-data: |
+    const _ = require("lodash");
+    const R = require("rambda");
+
+    const solution = (width, length) => {
+    return width * length;
+    };
+
+    module.exports = solution;
+  steps:
+    - Ввести код 
+    - Нажать "Run"
+  expected-result: |
+    Откротся окно  "Woohoo, you're Champion!!!!!" и танцующим бананом
 
 - summary: |
     Проверка на возможность просматривать рейтинг пользователей
@@ -290,7 +312,7 @@
   requirement: |
     Пользователь должен иметь возможность пригласить другого пользователя в игру
   prerequisites: |
-    Пользователь авторизован под двумя пользователями
+    Пользователь авторизован под двумя учетными записями
   test-data: |  
     "no-data"
   steps:
@@ -509,6 +531,22 @@
     - Выбираем устройство
   expected-result: |
     Сайт отображается адаптивно
+
+- summary: |
+   Проверка невозможности авторизации несуществующего в системе игрока
+  requirement: |
+   При вводе незарегистрированных данных, сайт должен выдать ошибку
+  prerequisites: |
+   "no-data"
+  test-data: |
+   Ввести любое слово, например Email = vitkl@mail.ru
+   Ввести любое слово, например Password = Prototip2019.
+  steps:
+   - Ввести Email
+   - Ввести Password
+   - Нажимаем кнопку «Submit»
+  expected-result: |
+   Появляется сообщение "EMAIL_NOT_FOUND"
 
 - summary: |
     Проверка на безопасность сайта и защиту данных пользоватя
